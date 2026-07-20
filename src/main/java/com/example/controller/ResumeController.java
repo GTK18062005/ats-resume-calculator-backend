@@ -17,22 +17,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/resume")
-@CrossOrigin(
-    origins = {
-        "https://ats-resume-calculator-frontend.onrender.com",
-        "http://localhost:3000"
-    },
-    allowedHeaders = "*",
-    allowCredentials = "true",
-    methods = {
-        RequestMethod.GET,
-        RequestMethod.POST,
-        RequestMethod.PUT,
-        RequestMethod.DELETE,
-        RequestMethod.OPTIONS,
-        RequestMethod.PATCH
-    }
-)
+
 public class ResumeController {
     
     private static final Logger log = LoggerFactory.getLogger(ResumeController.class);
