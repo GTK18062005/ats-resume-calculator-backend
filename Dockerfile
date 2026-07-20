@@ -1,10 +1,23 @@
-FROM openjdk:17-jdk-slim
+# Stage 1: Build the application
+FROM maven:3.8-openjdk-17 AS build
 
-# Set working directory
 WORKDIR /app
 
-# Copy the JAR file
-COPY target/*.jar app.jar
+# Copy pom.xml and download dependencies
+COPY pom.xml .
+RUN mvn dependency:go-offline
+
+# Copy source code and build JAR
+COPY src ./src
+RUN mvn clean package -DskipTests
+
+# Stage 2: Run the application
+FROM eclipse-temurin:17-jdk-alpine
+
+WORKDIR /app
+
+# Copy JAR from build stage
+COPY --from=build /app/target/*.jar app.jar
 
 # Expose port
 EXPOSE 8080
